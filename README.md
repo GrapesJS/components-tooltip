@@ -1,7 +1,7 @@
 # GrapesJS Tooltip
 
 
-Tooltip component for GrapesJS
+Simple, CSS only, tooltip component for GrapesJS
 
 
 
@@ -9,12 +9,9 @@ Tooltip component for GrapesJS
 
 * Plugin name: `grapesjs-tooltip`
 * Components
-  * `new-component1`
-  * `new-component2`
+  * `tooltip`
 * Blocks
-  * `new-block1`
-  * `new-block1`
-...
+  * `tooltip`
 
 
 

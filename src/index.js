@@ -6,8 +6,8 @@ export default (editor, opts = {}) => {
     // The ID used to create tooltip block and component
     id: 'tooltip',
 
-    // Label of the tooltip block
-    blockLabel: 'Tooltip',
+    // Label of the tooltip. Used for the block and component name
+    labelTooltip: 'Tooltip',
 
     // Object to extend the default tooltip block, eg. { label: 'Tooltip', category: 'Extra', ... }.
     // Pass a falsy value to avoid adding the block
@@ -15,6 +15,12 @@ export default (editor, opts = {}) => {
 
     // Object to extend the default tooltip properties, eg. `{ name: 'Tooltip', droppable: false, ... }`
     propsTooltip: {},
+
+    // Tooltip attribiute prefix
+    attrTooltip: 'data-tooltip',
+
+    // Tooltip class prefix
+    classTooltip: 'tooltip-component',
   },  ...opts };
 
   // Add components
@@ -22,7 +28,4 @@ export default (editor, opts = {}) => {
 
   // Add blocks
   loadBlocks(editor, options);
-
-  // TODO Remove
-  editor.on('load', () => editor.addComponents(`<div style="margin:100px; padding:25px;">Content loaded from the plugin</div>`, { at: 0 }))
 };
