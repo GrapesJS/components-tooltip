@@ -21,6 +21,12 @@ export default (editor, opts = {}) => {
 
     // Tooltip class prefix
     classTooltip: 'tooltip-component',
+
+    // Custom CSS styles, this will replace the default one
+    style: '',
+
+    // Additional CSS styles
+    styleAdditional: '',
   },  ...opts };
 
   // Add components

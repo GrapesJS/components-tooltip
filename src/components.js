@@ -4,7 +4,15 @@ export default (editor, opts = {}) => {
   const defaultModel = defaultType.model;
   const defaultView = defaultType.view;
   const cssc = editor.CssComposer;
-  const { id, labelTooltip, propsTooltip, attrTooltip, classTooltip } = opts;
+  const {
+    id,
+    labelTooltip,
+    propsTooltip,
+    attrTooltip,
+    classTooltip,
+    style,
+    styleAdditional,
+  } = opts;
   const classTooltipBody = `${classTooltip}__body`;
   const classTooltipEmpty = `${classTooltip}--empty`;
   const attrTooltipVis = `${attrTooltip}-visible`;
@@ -12,7 +20,7 @@ export default (editor, opts = {}) => {
   const attrTooltipLen = `${attrTooltip}-length`;
 
   const createCssStyles = () => {
-    let css = `
+    let css = style || `
       .${classTooltip} {
         position: relative;
         display: inline-block;
@@ -119,7 +127,7 @@ export default (editor, opts = {}) => {
         overflow: visible;
       }
     `;
-    const added = cssc.getAll().add(css);
+    const added = cssc.getAll().add(css + styleAdditional);
   }
 
   dc.addType(id, {
@@ -161,6 +169,7 @@ export default (editor, opts = {}) => {
             name: `${attrTooltipVis}`,
             label: 'Visible',
             type: 'checkbox',
+            valueTrue: 'true',
           }
         ],
         ...propsTooltip,
