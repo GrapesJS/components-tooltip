@@ -5,21 +5,40 @@ export default (editor, opts = {}) => {
   const defaultView = defaultType.view;
   const cssc = editor.CssComposer;
   const { id, labelTooltip, propsTooltip, attrTooltip, classTooltip } = opts;
+  const classTooltipBody = `${classTooltip}__body`;
   const attrTooltipVis = `${attrTooltip}-visible`;
   const attrTooltipPos = `${attrTooltip}-pos`;
   const attrTooltipLen = `${attrTooltip}-length`;
 
+  // TODO make the command
+  // editor.on('component:remove', removed => {
+  //   if (removed.is(id)) {
+  //       const tooltips = dc.getWrapper().find(`[data-gjs-type="${id}"]`).length;
+  //       if (!tooltips) {
+  //         const rules = cssc.getAll();
+  //         const toRemove = [];
+  //         rules.forEach(rule => {
+  //           const selector = rule.selectorsToString();
+  //           if (selector.indexOf(`[${attrTooltip}`) >= 0 ||
+  //               selector.indexOf(`.${classTooltip}`) >= 0) {
+  //             toRemove.push(rule);
+  //           }
+  //         });
+  //         rules.remove(toRemove);
+  //       }
+  //   }
+  // });
+
   const createCssStyles = () => {
     let css = `
-      .${classTooltip},
-      [${attrTooltip}] {
+      .${classTooltip} {
         position: relative;
         cursor: pointer;
         width: 50px;
         height: 50px;
       }
 
-      .${classTooltip}__body,
+      .${classTooltipBody},
       [${attrTooltip}]::after {
         font-family: Helvetica, sans-serif;
         background: rgba(55, 61, 73, 0.9);
@@ -127,6 +146,7 @@ export default (editor, opts = {}) => {
         attributes: {
           [attrTooltip]: labelTooltip,
         },
+        'style-clear': [`[${attrTooltip}`, `.${classTooltip}`],
         traits: [
           {
             name: attrTooltip,
