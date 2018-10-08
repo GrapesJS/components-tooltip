@@ -11,7 +11,8 @@ export default (editor, opts = {}) => {
 
   const createCssStyles = () => {
     let css = `
-      .${classTooltip} {
+      .${classTooltip},
+      [${attrTooltip}] {
         position: relative;
         cursor: pointer;
         width: 50px;
@@ -70,7 +71,8 @@ export default (editor, opts = {}) => {
       }
 
       [${attrTooltipPos}=bottom]:focus::after,
-      [${attrTooltipPos}=bottom]:hover::after {
+      [${attrTooltipPos}=bottom]:hover::after,
+      [${attrTooltipVis}=true][${attrTooltipPos}=bottom]::after {
         transform: translate(-50%, 0.5rem);
       }
 
@@ -82,7 +84,8 @@ export default (editor, opts = {}) => {
       }
 
       [${attrTooltipPos}=left]:focus::after,
-      [${attrTooltipPos}=left]:hover::after {
+      [${attrTooltipPos}=left]:hover::after,
+      [${attrTooltipVis}=true][${attrTooltipPos}=left]::after {
         transform: translate(-0.5rem, 50%);
       }
 
@@ -129,10 +132,6 @@ export default (editor, opts = {}) => {
             name: attrTooltip,
             label: 'Text',
           }, {
-            name: `${attrTooltipVis}`,
-            label: 'Visible',
-            type: 'checkbox',
-          }, {
             name: `${attrTooltipPos}`,
             label: 'Position',
             type: 'select',
@@ -153,6 +152,10 @@ export default (editor, opts = {}) => {
               { value: 'large', name: 'Large' },
               { value: 'fit', name: 'Fit' },
             ]
+          }, {
+            name: `${attrTooltipVis}`,
+            label: 'Visible',
+            type: 'checkbox',
           }
         ],
         ...propsTooltip,
