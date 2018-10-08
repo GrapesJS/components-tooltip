@@ -6,6 +6,7 @@ export default (editor, opts = {}) => {
   const cssc = editor.CssComposer;
   const { id, labelTooltip, propsTooltip, attrTooltip, classTooltip } = opts;
   const classTooltipBody = `${classTooltip}__body`;
+  const classTooltipEmpty = `${classTooltip}--empty`;
   const attrTooltipVis = `${attrTooltip}-visible`;
   const attrTooltipPos = `${attrTooltip}-pos`;
   const attrTooltipLen = `${attrTooltip}-length`;
@@ -14,7 +15,11 @@ export default (editor, opts = {}) => {
     let css = `
       .${classTooltip} {
         position: relative;
-        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .${classTooltipEmpty} {
         width: 50px;
         height: 50px;
       }
@@ -163,7 +168,14 @@ export default (editor, opts = {}) => {
 
       init() {
         !cssc.getClassRule(classTooltip) && createCssStyles();
+        this.listenTo(this.components(), 'add remove', this.checkEmpty);
+        this.checkEmpty();
       },
+
+      checkEmpty() {
+        const empty = !this.components().length;
+        this[empty ? 'addClass' : 'removeClass'](`${classTooltipEmpty}`);
+      }
     }, {
       isComponent(el) {
         if (el.hasAttribute && el.hasAttribute(attrTooltip)) {
