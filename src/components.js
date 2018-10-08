@@ -10,25 +10,6 @@ export default (editor, opts = {}) => {
   const attrTooltipPos = `${attrTooltip}-pos`;
   const attrTooltipLen = `${attrTooltip}-length`;
 
-  // TODO make the command
-  // editor.on('component:remove', removed => {
-  //   if (removed.is(id)) {
-  //       const tooltips = dc.getWrapper().find(`[data-gjs-type="${id}"]`).length;
-  //       if (!tooltips) {
-  //         const rules = cssc.getAll();
-  //         const toRemove = [];
-  //         rules.forEach(rule => {
-  //           const selector = rule.selectorsToString();
-  //           if (selector.indexOf(`[${attrTooltip}`) >= 0 ||
-  //               selector.indexOf(`.${classTooltip}`) >= 0) {
-  //             toRemove.push(rule);
-  //           }
-  //         });
-  //         rules.remove(toRemove);
-  //       }
-  //   }
-  // });
-
   const createCssStyles = () => {
     let css = `
       .${classTooltip} {
@@ -134,7 +115,6 @@ export default (editor, opts = {}) => {
       }
     `;
     const added = cssc.getAll().add(css);
-    console.log('Added', added);
   }
 
   dc.addType(id, {
