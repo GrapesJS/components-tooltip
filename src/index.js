@@ -27,6 +27,9 @@ export default (editor, opts = {}) => {
 
     // Additional CSS styles
     styleAdditional: '',
+
+    // Make all tooltip relative classes private
+    privateClasses: 1,
   },  ...opts };
 
   // Add components

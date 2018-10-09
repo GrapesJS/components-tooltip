@@ -12,12 +12,21 @@ export default (editor, opts = {}) => {
     classTooltip,
     style,
     styleAdditional,
+    privateClasses,
   } = opts;
   const classTooltipBody = `${classTooltip}__body`;
   const classTooltipEmpty = `${classTooltip}--empty`;
   const attrTooltipVis = `${attrTooltip}-visible`;
   const attrTooltipPos = `${attrTooltip}-pos`;
   const attrTooltipLen = `${attrTooltip}-length`;
+
+  if (privateClasses) {
+    editor.SelectorManager.getAll().add([
+      { private: 1, name: classTooltip },
+      { private: 1, name: classTooltipBody },
+      { private: 1, name: classTooltipEmpty },
+    ])
+  }
 
   const createCssStyles = () => {
     let css = style || `
@@ -47,7 +56,7 @@ export default (editor, opts = {}) => {
         max-width: 32rem;
         opacity: 0;
         overflow: hidden;
-        padding: 0.6rem 1rem;
+        padding: 0.5rem 1rem;
         pointer-events: none;
         position: absolute;
         text-overflow: ellipsis;
