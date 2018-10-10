@@ -30,6 +30,10 @@ export default (editor, opts = {}) => {
 
     // Make all tooltip relative classes private
     privateClasses: 1,
+
+    // Indicate if the tooltip can be styled. You can also pass an array
+    // of which proprties can be styled. Eg. `['color', 'background-color']`
+    stylableTooltip: true,
   },  ...opts };
 
   // Add components

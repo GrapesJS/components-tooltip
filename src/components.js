@@ -158,10 +158,10 @@ export default (editor, opts = {}) => {
             label: 'Position',
             type: 'select',
             options: [
-              'top',
-              'right',
-              'bottom',
-              'left',
+              { value: 'top', name: 'Top' },
+              { value: 'right', name: 'Right' },
+              { value: 'bottom', name: 'Bottom' },
+              { value: 'left', name: 'Left' },
             ]
           }, {
             name: `${attrTooltipLen}`,
@@ -179,7 +179,7 @@ export default (editor, opts = {}) => {
             label: 'Visible',
             type: 'checkbox',
             valueTrue: 'true',
-          }
+          },
         ],
         ...propsTooltip,
       },
