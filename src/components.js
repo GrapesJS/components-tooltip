@@ -13,6 +13,7 @@ export default (editor, opts = {}) => {
     style,
     styleAdditional,
     privateClasses,
+    stylableTooltip,
   } = opts;
   const classTooltipBody = `${classTooltip}__body`;
   const classTooltipEmpty = `${classTooltip}--empty`;
@@ -179,6 +180,19 @@ export default (editor, opts = {}) => {
             label: 'Visible',
             type: 'checkbox',
             valueTrue: 'true',
+          }, {
+            name: `style-tooltip`,
+            labelButton: 'Style tooltip',
+            type: 'button',
+            full: 1,
+            command: (editor, trait) => {
+              const openSm = editor.Panels.getButton('views', 'open-sm');
+              openSm && openSm.set('active', 1);
+              editor.StyleManager.setTarget(`.${classTooltipBody}`, {
+                targetIsClass: 1,
+                stylable: stylableTooltip,
+              })
+            },
           },
         ],
         ...propsTooltip,

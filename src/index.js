@@ -33,7 +33,7 @@ export default (editor, opts = {}) => {
 
     // Indicate if the tooltip can be styled. You can also pass an array
     // of which proprties can be styled. Eg. `['color', 'background-color']`
-    stylableTooltip: true,
+    stylableTooltip: ['color', 'background-color'],
   },  ...opts };
 
   // Add components
