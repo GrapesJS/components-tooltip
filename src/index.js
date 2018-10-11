@@ -34,6 +34,9 @@ export default (editor, opts = {}) => {
     // Indicate if the tooltip can be styled. You can also pass an array
     // of which proprties can be styled. Eg. `['color', 'background-color']`
     stylableTooltip: ['color', 'background-color'],
+
+    // If true, force the tooltip to be shown
+    showTooltipOnStyle: 1,
   },  ...opts };
 
   // Add components

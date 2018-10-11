@@ -14,12 +14,14 @@ export default (editor, opts = {}) => {
     styleAdditional,
     privateClasses,
     stylableTooltip,
+    showTooltipOnStyle,
   } = opts;
   const classTooltipBody = `${classTooltip}__body`;
   const classTooltipEmpty = `${classTooltip}--empty`;
   const attrTooltipVis = `${attrTooltip}-visible`;
   const attrTooltipPos = `${attrTooltip}-pos`;
   const attrTooltipLen = `${attrTooltip}-length`;
+  const traitIdStyleTooltip = 'style-tooltip';
 
   if (privateClasses) {
     editor.SelectorManager.getAll().add([
@@ -27,6 +29,26 @@ export default (editor, opts = {}) => {
       { private: 1, name: classTooltipBody },
       { private: 1, name: classTooltipEmpty },
     ])
+  }
+
+  if (showTooltipOnStyle) {
+    editor.on('styleManager:update:target', target => {
+      const selected = editor.getSelected();
+
+      if (selected) {
+        const el = selected.getEl();
+
+        if (selected.is(id) &&
+            !selected.getTrait(attrTooltipVis).getTargetValue() &&
+            target.getSelectors().getFullString().trim() == `.${classTooltipBody}`) {
+              el.setAttribute(attrTooltipVis, 'true');
+
+              editor.once('styleManager:update:target', () => {
+                el.removeAttribute(attrTooltipVis);
+              })
+        }
+      }
+    })
   }
 
   const createCssStyles = () => {
@@ -155,7 +177,7 @@ export default (editor, opts = {}) => {
             name: attrTooltip,
             label: 'Text',
           }, {
-            name: `${attrTooltipPos}`,
+            name: attrTooltipPos,
             label: 'Position',
             type: 'select',
             options: [
@@ -165,7 +187,7 @@ export default (editor, opts = {}) => {
               { value: 'left', name: 'Left' },
             ]
           }, {
-            name: `${attrTooltipLen}`,
+            name: attrTooltipLen,
             label: 'Lenght',
             type: 'select',
             options: [
@@ -176,12 +198,12 @@ export default (editor, opts = {}) => {
               { value: 'fit', name: 'Fit' },
             ]
           }, {
-            name: `${attrTooltipVis}`,
+            name: attrTooltipVis,
             label: 'Visible',
             type: 'checkbox',
             valueTrue: 'true',
           }, {
-            name: `style-tooltip`,
+            name: traitIdStyleTooltip,
             labelButton: 'Style tooltip',
             type: 'button',
             full: 1,
