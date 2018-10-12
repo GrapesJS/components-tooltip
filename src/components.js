@@ -172,7 +172,7 @@ export default (editor, opts = {}) => {
         attributes: {
           [attrTooltip]: labelTooltip,
         },
-        'style-clear': [`[${attrTooltip}`, `.${classTooltip}`],
+        'style-signature': [`[${attrTooltip}`, `.${classTooltip}`],
         traits: [
           {
             name: attrTooltip,
@@ -239,7 +239,6 @@ export default (editor, opts = {}) => {
     }),
     view: defaultView.extend({
       init() {
-        console.log('rule exists', cssc.getClassRule(classTooltip));
         !cssc.getClassRule(classTooltip) && createCssStyles();
       }
     }),
