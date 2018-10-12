@@ -160,6 +160,7 @@ export default (editor, opts = {}) => {
       }
     `;
     const added = cssc.getAll().add(css + styleAdditional);
+    console.log('Tooltip classes added');
   }
 
   dc.addType(id, {
@@ -221,7 +222,6 @@ export default (editor, opts = {}) => {
       },
 
       init() {
-        !cssc.getClassRule(classTooltip) && createCssStyles();
         this.listenTo(this.components(), 'add remove', this.checkEmpty);
         this.checkEmpty();
       },
@@ -237,6 +237,11 @@ export default (editor, opts = {}) => {
         }
       }
     }),
-    view: defaultView,
+    view: defaultView.extend({
+      init() {
+        console.log('rule exists', cssc.getClassRule(classTooltip));
+        !cssc.getClassRule(classTooltip) && createCssStyles();
+      }
+    }),
   });
 }
