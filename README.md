@@ -3,7 +3,7 @@
 
 Simple, CSS only, tooltip component for GrapesJS
 
-
+[Demo](https://grapesjs.com/demo.html)
 
 ## Summary
 
@@ -19,9 +19,20 @@ Simple, CSS only, tooltip component for GrapesJS
 
 ## Options
 
-|Option|Description|Default|
+| Option | Description | Default |
 |-|-|-
-|`option1`|Description option|`default value`|
+| `id` | The ID used to create tooltip block and component | `tooltip` |
+| `labelTooltip` | Label of the tooltip. Used for the block and component name | `Tooltip` |
+| `blockTooltip` | Object to extend the default tooltip block, eg. { label: 'Tooltip', category: 'Extra', ... }. Pass a falsy value to avoid adding the block | `{}` |
+| `propsTooltip` | Object to extend the default tooltip properties, eg. `{ name: 'Tooltip', droppable: false, ... }` | `{}` |
+| `extendTraits` | A function which allows to extend default traits by receiving the original array and returning a new one | `traits => traits` |
+| `attrTooltip` | Tooltip attribute prefix | `data-tooltip` |
+| `classTooltip` | Tooltip class prefix | `tooltip-component` |
+| `style` | Custom CSS styles, this will replace the default one | `''` |
+| `styleAdditional` | Additional CSS styles | `''` |
+| `privateClasses` | Make all tooltip relative classes private | `true` |
+| `showTooltipOnStyle` | If true, force the tooltip to be shown when you're styling it | `true` |
+| `stylableTooltip` | Indicate if the tooltip can be styled. You can also pass an array of which proprties can be styled. Eg. `['color', 'background-color']` | `check the source...` |
 
 
 
@@ -65,18 +76,18 @@ Directly in the browser
 Modern javascript
 ```js
 import grapesjs from 'grapesjs';
-import yourPluginName from 'grapesjs-tooltip';
+import pluginTooltip from 'grapesjs-tooltip';
 
 const editor = grapesjs.init({
   container : '#gjs',
   // ...
-  plugins: [yourPluginName],
+  plugins: [pluginTooltip],
   pluginsOpts: {
-    [yourPluginName]: { /* options */ }
+    [pluginTooltip]: { /* options */ }
   }
   // or
   plugins: [
-    editor => yourPluginName(editor, { /* options */ }),
+    editor => pluginTooltip(editor, { /* options */ }),
   ],
 });
 ```

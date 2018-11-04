@@ -19,7 +19,7 @@ export default (editor, opts = {}) => {
     // A function which allows to extend default traits by receiving the original array and returning a new one
     extendTraits: traits => traits,
 
-    // Tooltip attribiute prefix
+    // Tooltip attribute prefix
     attrTooltip: 'data-tooltip',
 
     // Tooltip class prefix
