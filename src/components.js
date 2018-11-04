@@ -15,6 +15,7 @@ export default (editor, opts = {}) => {
     privateClasses,
     stylableTooltip,
     showTooltipOnStyle,
+    extendTraits,
   } = opts;
   const classTooltipBody = `${classTooltip}__body`;
   const classTooltipEmpty = `${classTooltip}--empty`;
@@ -79,7 +80,7 @@ export default (editor, opts = {}) => {
         max-width: 32rem;
         opacity: 0;
         overflow: hidden;
-        padding: 0.5rem 1rem;
+        padding: 8px 16px;
         pointer-events: none;
         position: absolute;
         text-overflow: ellipsis;
@@ -159,8 +160,7 @@ export default (editor, opts = {}) => {
         overflow: visible;
       }
     `;
-    const added = cssc.getAll().add(css + styleAdditional);
-    console.log('Tooltip classes added');
+    cssc.getAll().add(css + styleAdditional);
   }
 
   dc.addType(id, {
@@ -173,7 +173,7 @@ export default (editor, opts = {}) => {
           [attrTooltip]: labelTooltip,
         },
         'style-signature': [`[${attrTooltip}`, `.${classTooltip}`],
-        traits: [
+        traits: extendTraits([
           {
             name: attrTooltip,
             label: 'Text',
@@ -217,7 +217,7 @@ export default (editor, opts = {}) => {
               })
             },
           },
-        ],
+        ]),
         ...propsTooltip,
       },
 

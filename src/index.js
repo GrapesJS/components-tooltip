@@ -16,6 +16,9 @@ export default (editor, opts = {}) => {
     // Object to extend the default tooltip properties, eg. `{ name: 'Tooltip', droppable: false, ... }`
     propsTooltip: {},
 
+    // A function which allows to extend default traits by receiving the original array and returning a new one
+    extendTraits: traits => traits,
+
     // Tooltip attribiute prefix
     attrTooltip: 'data-tooltip',
 
@@ -33,7 +36,31 @@ export default (editor, opts = {}) => {
 
     // Indicate if the tooltip can be styled. You can also pass an array
     // of which proprties can be styled. Eg. `['color', 'background-color']`
-    stylableTooltip: ['color', 'background-color'],
+    stylableTooltip: [
+      'background-color',
+      'padding',
+      'padding-top',
+      'padding-right',
+      'padding-bottom',
+      'padding-left',
+      'font-family',
+      'font-size',
+      'font-weight',
+      'letter-spacing',
+      'color',
+      'line-height',
+      'text-align',
+      'border-radius',
+      'border-top-left-radius',
+      'border-top-right-radius',
+      'border-bottom-left-radius',
+      'border-bottom-right-radius',
+      'border',
+      'border-width',
+      'border-style',
+      'border-color',
+      'opacity',
+    ],
 
     // If true, force the tooltip to be shown
     showTooltipOnStyle: 1,
