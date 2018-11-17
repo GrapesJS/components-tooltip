@@ -59,7 +59,6 @@ export default (editor, opts = {}) => {
       'border-width',
       'border-style',
       'border-color',
-      'opacity',
     ],
 
     // If true, force the tooltip to be shown

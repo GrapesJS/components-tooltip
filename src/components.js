@@ -68,7 +68,7 @@ export default (editor, opts = {}) => {
       .${classTooltipBody},
       [${attrTooltip}]::after {
         font-family: Helvetica, sans-serif;
-        background: rgba(55, 61, 73, 0.9);
+        background: rgba(55, 61, 73, 0.95);
         border-radius: 3px;
         bottom: 100%;
         color: #fff;

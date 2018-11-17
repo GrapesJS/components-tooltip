@@ -32,7 +32,7 @@ Simple, CSS only, tooltip component for GrapesJS
 | `styleAdditional` | Additional CSS styles | `''` |
 | `privateClasses` | Make all tooltip relative classes private | `true` |
 | `showTooltipOnStyle` | If true, force the tooltip to be shown when you're styling it | `true` |
-| `stylableTooltip` | Indicate if the tooltip can be styled. You can also pass an array of which proprties can be styled. Eg. `['color', 'background-color']` | `check the source...` |
+| `stylableTooltip` | Indicate if the tooltip can be styled. You can also pass an array of which properties can be styled. Eg. `['color', 'background-color']` | `check the source...` |
 
 
 
