@@ -189,7 +189,7 @@ export default (editor, opts = {}) => {
             ]
           }, {
             name: attrTooltipLen,
-            label: 'Lenght',
+            label: 'Length',
             type: 'select',
             options: [
               { value: '', name: 'One line' },
