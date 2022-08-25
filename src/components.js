@@ -1,8 +1,4 @@
 export default (editor, opts = {}) => {
-  const dc = editor.DomComponents;
-  const defaultType = dc.getType('default');
-  const defaultModel = defaultType.model;
-  const defaultView = defaultType.view;
   const cssc = editor.CssComposer;
   const {
     id,
@@ -163,10 +159,10 @@ export default (editor, opts = {}) => {
     cssc.getAll().add(css + styleAdditional);
   }
 
-  dc.addType(id, {
-    model: defaultModel.extend({
+  editor.Components.addType(id, {
+    isComponent: el => el.hasAttribute?.(attrTooltip),
+    model: {
       defaults: {
-        ...defaultModel.prototype.defaults,
         name: labelTooltip,
         classes: [classTooltip],
         attributes: {
@@ -207,14 +203,13 @@ export default (editor, opts = {}) => {
             name: traitIdStyleTooltip,
             labelButton: 'Style tooltip',
             type: 'button',
-            full: 1,
-            command: (editor, trait) => {
+            full: true,
+            command: (editor) => {
               const openSm = editor.Panels.getButton('views', 'open-sm');
               openSm && openSm.set('active', 1);
-              editor.StyleManager.setTarget(`.${classTooltipBody}`, {
-                targetIsClass: 1,
-                stylable: stylableTooltip,
-              })
+              const ruleTooltip = editor.Css.getRules(`.${classTooltipBody}`)[0];
+              ruleTooltip.set({ stylable: stylableTooltip });
+              editor.StyleManager.select(ruleTooltip);
             },
           },
         ]),
@@ -230,17 +225,11 @@ export default (editor, opts = {}) => {
         const empty = !this.components().length;
         this[empty ? 'addClass' : 'removeClass'](`${classTooltipEmpty}`);
       }
-    }, {
-      isComponent(el) {
-        if (el.hasAttribute && el.hasAttribute(attrTooltip)) {
-          return { type: id };
-        }
-      }
-    }),
-    view: defaultView.extend({
+    },
+    view: {
       init() {
         !cssc.getClassRule(classTooltip) && createCssStyles();
       }
-    }),
+    },
   });
 }
