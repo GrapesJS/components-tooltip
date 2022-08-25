@@ -29,7 +29,7 @@ export default (editor, opts = {}) => {
     styleAdditional: '',
 
     // Make all tooltip relative classes private
-    privateClasses: 1,
+    privateClasses: true,
 
     // Indicate if the tooltip can be styled. You can also pass an array
     // of which proprties can be styled. Eg. `['color', 'background-color']`
@@ -59,7 +59,7 @@ export default (editor, opts = {}) => {
     ],
 
     // If true, force the tooltip to be shown
-    showTooltipOnStyle: 1,
+    showTooltipOnStyle: true,
     ...opts
   };
 
@@ -105,26 +105,6 @@ export default (editor, opts = {}) => {
       { private: 1, name: classTooltipBody },
       { private: 1, name: classTooltipEmpty },
     ])
-  }
-
-  if (showTooltipOnStyle) {
-    editor.on('styleManager:update:target', target => {
-      const selected = editor.getSelected();
-
-      if (selected) {
-        const el = selected.getEl();
-
-        if (selected.is(id) &&
-            !selected.getTrait(attrTooltipVis).getTargetValue() &&
-            target.getSelectors().getFullString().trim() == `.${classTooltipBody}`) {
-              el.setAttribute(attrTooltipVis, 'true');
-
-              editor.once('styleManager:update:target', () => {
-                el.removeAttribute(attrTooltipVis);
-              })
-        }
-      }
-    })
   }
 
   // Create component
@@ -283,6 +263,16 @@ export default (editor, opts = {}) => {
               const ruleTooltip = editor.Css.getRules(`.${classTooltipBody}`)[0];
               ruleTooltip.set({ stylable: stylableTooltip });
               editor.StyleManager.select(ruleTooltip);
+
+              if (showTooltipOnStyle) {
+                const selected = editor.getSelected();
+                if (selected?.is(id)) {
+                  selected.addAttributes({ [attrTooltipVis]: 'true' });
+                  editor.once('style:target', () => {
+                    selected.addAttributes({ [attrTooltipVis]: 'false' });
+                  });
+                }
+              }
             },
           },
         ]),
