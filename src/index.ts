@@ -1,5 +1,87 @@
-export default (editor, opts = {}) => {
-  const options = {
+import type grapesjs from 'grapesjs';
+
+type ComponentProperties = grapesjs.ComponentProperties;
+
+type TraitsOptions = ComponentProperties["traits"];
+
+export type PluginOptions = {
+  /**
+   * The ID used to create tooltip block and component
+   * @default 'tooltip'
+   */
+   id?: string;
+
+  /**
+   * The ID used to create tooltip block and component
+   * @default 'Tooltip'
+   */
+  labelTooltip?: string,
+
+  /**
+   * Object to extend the default tooltip block. Pass a falsy value to avoid adding the block.
+   * @example
+   * { label: 'Tooltip', category: 'Extra', ... }
+   */
+  blockTooltip?: Partial<grapesjs.BlockOptions>;
+
+  /**
+   * Object to extend the default tooltip properties.
+   * @example
+   * { name: 'Tooltip', droppable: false, ... }
+   */
+  propsTooltip?: grapesjs.ComponentDefinition;
+
+  /**
+   * A function which allows to extend default traits by receiving the original array and returning a new one.
+   */
+  extendTraits?: (traits: TraitsOptions) => TraitsOptions,
+
+  /**
+   * Tooltip attribute prefix.
+   * @default 'data-tooltip'
+   */
+  attrTooltip?: string,
+
+  /**
+   * Tooltip class prefix.
+   * @default 'tooltip-component'
+   */
+  classTooltip?: string,
+
+  /**
+   * Custom CSS styles for the tooltip component, this will replace the default one.
+   * @default 'tooltip-component'
+   */
+  style?: string,
+
+  /**
+   * Additional CSS styles for the tooltip component.
+   * @default 'tooltip-component'
+   */
+  styleAdditional?: string,
+
+  /**
+   * Make all tooltip relative classes private.
+   * @default true
+   */
+  privateClasses?: boolean,
+
+  /**
+   * Indicate if the tooltip can be styled.
+   * You can pass an array of which proprties can be styled.
+   * @example ['color', 'background-color']
+   */
+  stylableTooltip?: string[] | boolean,
+
+  /**
+   * If true, force the tooltip to be shown when the default "Style tooltip" trait button is clicked.
+   * @default true
+   */
+  showTooltipOnStyle?: boolean,
+};
+
+const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
+  const options: PluginOptions = {
     // The ID used to create tooltip block and component
     id: 'tooltip',
 
@@ -64,10 +146,7 @@ export default (editor, opts = {}) => {
   };
 
   const {
-    id,
-    labelTooltip,
     propsTooltip,
-    attrTooltip,
     classTooltip,
     style,
     styleAdditional,
@@ -77,6 +156,10 @@ export default (editor, opts = {}) => {
     blockTooltip,
     extendTraits,
   } = options;
+
+  const id = options.id!;
+  const labelTooltip = options.labelTooltip!;
+  const attrTooltip = options.attrTooltip!;
 
   // Create block
   if (blockTooltip) {
@@ -222,7 +305,7 @@ export default (editor, opts = {}) => {
             overflow: visible;
           }
         `) + styleAdditional,
-        traits: extendTraits([
+        traits: extendTraits!([
           {
             name: attrTooltip,
             label: 'Text',
@@ -259,15 +342,16 @@ export default (editor, opts = {}) => {
             full: true,
             command: (editor) => {
               const openSm = editor.Panels.getButton('views', 'open-sm');
-              openSm && openSm.set('active', 1);
+              openSm?.set('active', true);
               const ruleTooltip = editor.Css.getRules(`.${classTooltipBody}`)[0];
-              ruleTooltip.set({ stylable: stylableTooltip });
+              ruleTooltip.set('stylable', stylableTooltip);
               editor.StyleManager.select(ruleTooltip);
 
               if (showTooltipOnStyle) {
                 const selected = editor.getSelected();
                 if (selected?.is(id)) {
                   selected.addAttributes({ [attrTooltipVis]: 'true' });
+                  // @ts-ignore
                   editor.once('style:target', () => {
                     selected.addAttributes({ [attrTooltipVis]: 'false' });
                   });
@@ -287,7 +371,9 @@ export default (editor, opts = {}) => {
       checkEmpty() {
         const empty = !this.components().length;
         this[empty ? 'addClass' : 'removeClass'](`${classTooltipEmpty}`);
-      }
+      },
     },
   });
 };
+
+export default plugin;
