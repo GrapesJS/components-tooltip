@@ -1,8 +1,7 @@
 import loadComponents from './components';
-import loadBlocks from './blocks';
 
 export default (editor, opts = {}) => {
-  const options = { ...{
+  const options = {
     // The ID used to create tooltip block and component
     id: 'tooltip',
 
@@ -63,11 +62,25 @@ export default (editor, opts = {}) => {
 
     // If true, force the tooltip to be shown
     showTooltipOnStyle: 1,
-  },  ...opts };
+    ...opts
+  };
+
+  const { blockTooltip, labelTooltip, id } = options;
+
+  // Create block
+  if (blockTooltip) {
+    editor.BlockManager.add(id, {
+      media: `<svg viewBox="0 0 24 24">
+          <path d="M4 2h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2h-4l-4 4-4-4H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2m0 2v12h4.83L12 19.17 15.17 16H20V4H4z"></path>
+        </svg>`,
+      label: labelTooltip,
+      category: 'Extra',
+      select: true,
+      content: { type: id },
+      ...blockTooltip
+    });
+  }
 
   // Add components
   loadComponents(editor, options);
-
-  // Add blocks
-  loadBlocks(editor, options);
 };
