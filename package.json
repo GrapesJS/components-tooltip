@@ -1,6 +1,6 @@
 {
   "name": "grapesjs-tooltip",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "GrapesJS Tooltip component",
   "main": "dist/index.js",
   "files": [
