@@ -5,7 +5,6 @@
     <title>GrapesJS Tooltip</title>
     <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
     <script src="https://unpkg.com/grapesjs"></script>
-    <script src="dist/grapesjs-tooltip.min.js"></script>
     <style>
       body,
       html {
@@ -25,20 +24,21 @@
 
 
     <script type="text/javascript">
-      var editor = grapesjs.init({
-        height: '100%',
-        showOffsets: 1,
-        noticeOnUnload: 0,
-        storageManager: { autoload: 0 },
-        container: '#gjs',
-        fromElement: true,
+      window.onload = () => {
+        window.editor = grapesjs.init({
+          height: '100%',
+          showOffsets: 1,
+          noticeOnUnload: 0,
+          storageManager: { autoload: 0 },
+          container: '#gjs',
+          fromElement: true,
 
-        plugins: ['grapesjs-tooltip'],
-        pluginsOpts: {
-          'grapesjs-tooltip': { some: 'value' }
-        }
-      });
-      window.editor = editor;
+          plugins: ['grapesjs-tooltip'],
+          pluginsOpts: {
+            'grapesjs-tooltip': {}
+          }
+        });
+      }
     </script>
   </body>
 </html>
