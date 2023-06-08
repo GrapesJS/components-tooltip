@@ -45,7 +45,7 @@ Simple, CSS only, tooltip component for GrapesJS
 * NPM
   * `npm i grapesjs-tooltip`
 * GIT
-  * `git clone https://github.com/artf/grapesjs-tooltip.git`
+  * `git clone https://github.com/GrapesJS/components-tooltip.git`
 
 
 
@@ -101,7 +101,7 @@ const editor = grapesjs.init({
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-tooltip.git
+$ git clone https://github.com/GrapesJS/components-tooltip.git
 $ cd grapesjs-tooltip
 ```
 
