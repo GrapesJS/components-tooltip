@@ -1,8 +1,6 @@
-import type grapesjs from 'grapesjs';
+import type { BlockProperties, ComponentDefinition, Plugin } from 'grapesjs';
 
-type ComponentProperties = grapesjs.ComponentProperties;
-
-type TraitsOptions = ComponentProperties["traits"];
+type TraitsProperty = ComponentDefinition['traits'];
 
 export type PluginOptions = {
   /**
@@ -22,19 +20,19 @@ export type PluginOptions = {
    * @example
    * { label: 'Tooltip', category: 'Extra', ... }
    */
-  blockTooltip?: Partial<grapesjs.BlockOptions>;
+  blockTooltip?: Partial<BlockProperties>;
 
   /**
    * Object to extend the default tooltip properties.
    * @example
    * { name: 'Tooltip', droppable: false, ... }
    */
-  propsTooltip?: grapesjs.ComponentDefinition;
+  propsTooltip?: ComponentDefinition;
 
   /**
    * A function which allows to extend default traits by receiving the original array and returning a new one.
    */
-  extendTraits?: (traits: TraitsOptions) => TraitsOptions,
+  extendTraits?: (traits: TraitsProperty) => TraitsProperty,
 
   /**
    * Tooltip attribute prefix.
@@ -80,7 +78,7 @@ export type PluginOptions = {
   showTooltipOnStyle?: boolean,
 };
 
-const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
+const plugin: Plugin<PluginOptions> = (editor, opts = {}) => {
   const options: PluginOptions = {
     // The ID used to create tooltip block and component
     id: 'tooltip',
@@ -360,7 +358,7 @@ const plugin: grapesjs.Plugin<PluginOptions> = (editor, opts = {}) => {
             },
           },
         ]),
-        ...propsTooltip,
+        ...(propsTooltip as any),
       },
 
       init() {
